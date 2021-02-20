@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+      <setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.cinema.ddby.user.model.vo.User" alias="User"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.Coupon" alias="Coupon"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.Movie" alias="Movie"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.Scheduler" alias="Scheduler"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.BuyList" alias="BuyList"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.PointList" alias="PointList"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.DIARY" alias="DIARY"/>
+		<typeAlias type="com.cinema.ddby.user.model.vo.Notice" alias="Notice"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/manager-mapper.xml"/>
+		<mapper resource="mappers/reservation-mapper.xml"/>
+	</mappers>
+</configuration>

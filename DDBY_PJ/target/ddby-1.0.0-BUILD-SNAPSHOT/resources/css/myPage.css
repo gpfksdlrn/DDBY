@@ -1,0 +1,683 @@
+@charset "UTF-8";
+.sect-person-info>.box-image {
+    float: left;
+    width: 135px;
+    height: 135px;
+}
+
+.thumb-image {
+    display: block;
+    position: relative;
+}
+
+.box-contents {
+    width: 363px;
+    margin: 0 auto;
+}
+
+.sect-person-info>.box-image>.thumb-image>img {
+    width: 135px;
+    height: 135px;
+    margin-left: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.person-info span {
+    color: whitesmoke;
+    font-weight: 900;
+    font-size: medium;
+}
+
+.person-info span:first-child {
+    color: whitesmoke;
+    font-weight: 900;
+    font-size: x-large;
+}
+
+.person-info-bottom {
+    text-align: left;
+    margin-left: 30px;
+}
+
+.person-info-bottom span {
+    color: whitesmoke;
+    font-weight: 600;
+    font-size: medium;
+    text-align: left;
+}
+
+/* test */
+.wrapper {
+    width: 1000px;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+}
+
+.wrapper .sidebar {
+    width: 200px;
+    height: 100%;
+    padding: 30px 0;
+}
+
+.wrapper .sidebar h2 {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.wrapper .sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #070720;
+    border-top: 1px solid #070720;
+}
+
+.wrapper .sidebar ul li:hover {
+    background: brown;
+}
+
+.wrapper .sidebar ul li:hover a {
+    color: white;
+    font-weight: 900;
+}
+
+.wrapper .sidebar ul li a {
+    color: #bdb8d7;
+    display: block;
+}
+
+.wrapper .main_content {
+    width: 100%;
+    margin: 48px 0 50px 50px;
+}
+
+.wrapper .main_content .header {
+    padding: 15px;
+    background: #fff;
+    color: #717171;
+    border-bottom: 1px solid #e0e4e8;
+}
+
+table.detail_wdetail {
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin-top: 40px;
+    border-collapse: collapse;
+}
+
+table.detail_wdetail .wthead_wdetail {
+    border: 1px solid#ccc;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+table.detail_wdetail .wthead_wdetail>tr>th {
+    border: 1px solid#ccc;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    text-align: inherit;
+}
+
+table.detail_wdetail>tbody>tr>td {
+    width: 200px;
+    height: 45px;
+    border: 1px solid#ccc;
+    border-bottom: 1px solid #ccc;
+    font-family: sans-serif;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    color: #fff;
+}
+
+/* no row width resize */
+table.detail_wdetail #short_wdetail {
+    width: 50px;
+}
+
+table.detail_wdetail #long_mybuylist {
+    width: 580px;
+}
+
+.point_table {
+    width: 790px;
+}
+
+.point_table #short_point_table {
+    width: 43px;
+}
+
+.info_div_title {
+    width: 200px;
+    height: 50px;
+    float: left;
+    border-bottom: 1px solid white;
+    color: white;
+    line-height: 49px;
+    padding-left: 10px;
+}
+
+.info_div_content {
+    position: relative;
+    width: 590px;
+    height: 50px;
+    float: left;
+    border-bottom: 1px solid white;
+    color: white;
+    line-height: 49px;
+    padding-left: 10px;
+}
+
+/* 찜해제버튼 */
+.btn_mywish {
+    margin-left: 10px;
+    background-color: #0B0C2A;
+    border: 1px solid #fff;
+    color: beige;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.3s;
+    outline: none;
+    cursor: pointer;
+    height: 35px;
+    line-height: 0px;
+}
+
+/* 찜해제버튼 hover */
+.btn_mywish:hover {
+    margin-left: 10px;
+    background-color: #E53637;
+    font-weight: 500;
+    color: white;
+    outline: none;
+    height: 35px;
+    line-height: 0px;
+}
+
+
+.mypage_nickname_text {
+    color: black;
+    height: 35px;
+    width: 300px;
+}
+
+.image_container {
+    width: 100px;
+    height: 100px;
+    margin-top: 14px;
+    margin-right: 20px;
+    object-fit: cover;
+    float: left;
+    margin-bottom: 50px;
+}
+
+.info_div_content #image {
+    visibility: hidden;
+}
+
+.btn_file {
+    position: absolute;
+    top: 80px;
+    left: 120px;
+}
+
+.btn_file:hover {
+    position: absolute;
+    top: 80px;
+    left: 120px;
+}
+
+/* 내가 본 영화 */
+/* 나의 영화목록 */
+/* 전체 div */
+.content_mywish {
+    width: 100%;
+    padding: 20px 0 50px 0;
+}
+
+.content_mywish .layoutSubbox_mywish {
+    position: relative;
+    margin: 0 auto;
+}
+
+.content_mywish .layoutSubbox_mywish:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* 구매내역 txt */
+.content_mywish .tit2_mywish {
+    position: relative;
+    font-size: 20px;
+    color: #272d32;
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 58px 0 0 0;
+    padding: 0 0 14px 0;
+    letter-spacing: -1px;
+    border-bottom: 1px #000 solid;
+    font-family: jua;
+}
+
+/* 리스트 div*/
+.pOrderSearch_mywish {
+    display: table;
+    width: 100%;
+    border-bottom: 1px #ffffff solid;
+}
+
+.pLeft_mywish {
+    display: table;
+    margin: 20px;
+}
+
+/*리스트Section*/
+.Lsit-Saction_mywish {
+    display: table-cell;
+    vertical-align: middle;
+    width: 10rem;
+    height: 10rem;
+}
+
+/*썸네일 영역*/
+.mywish_img_index {
+    width: 100%;
+    object-fit: fill;
+    height: 100%;
+    transition: all 0.6s;
+    vertical-align: middle;
+}
+
+.mywish_img_div {
+    overflow: hidden;
+    width: 110px;
+    height: 158px;
+    margin-left: 0.9rem;
+    object-fit: cover;
+
+}
+
+/* 제목 + 이름 div */
+.pWrap_mywish {
+    width: 400px;
+    color: #fff;
+}
+
+/* 상품 제목 */
+.pWrap_mywish .pTitle_mywish {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 20px;
+}
+
+.pWrap_mywish .pTitle_mywish p {
+	color: white;
+    font-weight: 300;
+    font-size: 1.2rem;
+}
+
+.pWrap_mywish .pTitle_detail {
+    margin-left: 30px;
+}
+
+
+/* 찜상품 div의 오른쪽 부분 찜해제버튼 + 가격 */
+.pRight_mywish {
+    display: table-cell;
+}
+
+/* 찜해제버튼 */
+.wishCancle_mywish .btn_mywish,
+.pMovieDiary_mywish .btn_mywish {
+    background-color: #0B0C2A;
+    border: 1px solid #fff;
+    color: beige;
+    padding: 6px 13px 7px 13px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.3s;
+    outline: none;
+    cursor: pointer;
+}
+
+/* 찜해제버튼 hover */
+.wishCancle_mywish .btn_mywish:hover,
+.pMovieDiary_mywish .btn_mywish:hover {
+    background-color: #E53637;
+    font-weight: 500;
+    color: white;
+    outline: none;
+}
+
+.wishCancle_mywish {
+    margin-left: 78px;
+}
+
+.pMovieDiary_mywish .btn_mywish {
+    margin-top: 63px;
+}
+
+/* 리뷰 */
+.review_mywish {
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+.review_mywish i {
+    color: beige;
+}
+
+/* 스크롤바 커스텀 Start */
+.article-movie-select-box::-webkit-scrollbar{
+    width: 6px;
+}
+
+.article-movie-select-box::-webkit-scrollbar-track{
+    /* 스크롤바 트랙(바탕?) */
+    background-color: transparent;
+}
+
+.article-movie-select-box::-webkit-scrollbar-thumb {
+    /* 스크롤바 부분 */
+    border-radius: 3px;
+    background-color: gray;
+}
+
+.article-movie-select-box::-webkit-scrollbar-button{
+    width: 0;
+    height: 0;
+}
+
+/* 스크롤바 커스텀 End */
+
+
+/* 반응형~ */
+@media (max-width: 1360px) {
+
+    /* 사이드 여백 */
+    .content_mybuylist .layoutSubbox_mybuylist {
+        width: auto;
+        margin: 0 20px;
+    }
+}
+
+/* Movie diary */
+.col-detail {
+    position: relative;
+    width: 800px;
+    float: left;
+}
+
+.movielog-detail-wrap {
+    width: 720px;
+    margin: 0 auto;
+}
+
+.tit-mycgv {
+    margin-top: 20px;
+    overflow: hidden;
+    position: relative;
+    line-height: 34px;
+}
+
+.tit-mycgv p {
+    float: left;
+    margin-left: 5px;
+    color : white;
+}
+
+.movielog-detail-wrap .diary-register-wrap {
+    width: 718px;
+    margin: 20px 0;
+    padding: 0 1px;
+    color: white;
+}
+
+.movielog-detail-wrap .diary-register-wrap > .sect-diary-register {
+    width: 716px;
+    background-color: #0B0C2A;
+    border: 1px solid #e3e3e1;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie, .movielog-detail-wrap .sect-diary-register .article-who-together {
+    border-bottom: 1px solid #e0e0e0;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie {
+    position: relative;
+    height: 118px;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .movie-select {
+    overflow: hidden;
+    padding: 17px;
+    float: left;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-image {
+    float: left;
+    margin-right: 15px;
+}
+.sect-diary-register .thumb-image{
+    float: left;
+    width: 55px;
+    height: 70px;
+    display: block;
+    position: relative;
+}
+.sect-movie-info p {
+    color:white;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-contents-diary {
+    float: left;
+    position: relative;
+    width: 603px;
+    height: 70px;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-contents-diary > .title {
+    margin-bottom: 10px;
+    padding: 5px 0 0;
+    font-size: 13px;
+    line-height: 1.2;
+    
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-contents-diary > .title > p {
+    color: #666;
+    font-family: verdana, sans-serif;
+    font-size: 11px;
+    margin: 0 0 10px 0;
+    color: white;
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-contents-diary > .title > strong{
+    font-weight: 900;
+    
+}
+.movielog-detail-wrap .sect-diary-register .article-any-movie .box-contents-diary > .date, .theater{
+    color: #666;
+    font-family: verdana, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 0.5;
+    color: white;
+}
+
+.article-who-together .fa-user-friends, .fa-comment, .fa-video{
+    font-size: 20px;
+    color: beige;
+}
+
+
+
+.movielog-detail-wrap .sect-diary-register > .article-how-see > textarea {
+    width: 658px;
+    height: 95px;
+    outline: 0 none;
+    background: #0B0C2A;
+    margin: 7px 5px 2px 10px;
+}
+.movielog-detail-wrap .sect-diary-register > .article-how-see .comment_diary {
+    float:left;
+}
+
+.movielog-detail-wrap .sect-diary-register > .article-info-select {
+    position: relative;
+    z-index: 10;
+    height: 37px;
+    background-color: #e9e7ec;
+    line-height: 37px;
+}
+/*버튼*/
+.movielog-detail-wrap .sect-diary-register > .article-info-select > .set-btn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    margin: 0;
+}
+.round{
+    line-height: 23px;
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+.round.on.gray {
+    border: 2px solid #7b7b7b;
+    background-color: #7b7b7b;
+    color: #ffffff;
+}
+.round.on.red {
+    border: 2px solid #e71a0f;
+    background-color: #e71a0f;
+    color: #ffffff;
+}
+/* 무비다이어리 목록 */
+.sect-movie-info{
+    position: relative;
+    border-bottom: 1px solid #e3e3e1;
+    margin-bottom: 40px;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents {
+    margin:0px;
+}
+
+.thumb-image-detail{
+    position: relative;
+}
+
+.thumb-image-detail img{
+    width: 110px;
+    height: 161px;
+}
+.thumb-image-detail img.grade-age{
+    position: absolute;
+    left: 0px;
+    width: 25px;
+    height: 25px;
+    margin: 3px;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents > .title-detail {
+    width: 550px;
+    height: 45px;
+    margin: 14px 0;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents > .title-detail strong {
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents > .title-detail > p {
+    color: #e3e3e1;
+    font-family: verdana, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents > .theater {
+    margin-bottom: 15px;
+}
+.movielog-detail-wrap .article-movie-info > .box-contents > .theater > .peer {
+    padding-left: 22px;
+    color: beige;
+}
+.movielog-detail-wrap .article-movie-info > .btn-del {
+    position: absolute;
+    top: 35px;
+    right: 1px;
+    border: none;
+    outline: none;
+}
+.movielog-detail-wrap .article-movie-info > .btn-del .fa-times-circle, .wish__item__pic .fa-times-circle {
+    color: beige;
+    font-size: 30px;
+    outline: none;
+    border: none;
+}
+.wish__item__pic .fa-times-circle{
+	float: right;
+	margin: 10px;
+	cursor: pointer;
+}
+.article-wrt-details {
+    margin-top: 15px;
+}
+.article-wrt-details > p {
+    margin-bottom: 20px;
+    color: #fff;
+    padding-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+.movielog-detail-wrap > .movie-diary-wrap .sect-movie-info > .set-combo {
+    position: relative;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+.movielog-detail-wrap > .movie-diary-wrap .sect-movie-info > .set-combo > span {
+    color: #9e9e9e;
+}
+.movielog-detail-wrap > .movie-diary-wrap .sect-movie-info > .set-combo > .btn > .fa-edit {
+    color: beige;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.login__form {
+    font-size: 15px;
+    color: #ffffff;
+    margin-top: 40px;
+    padding: 0;
+}
+.refund_btn{
+    background: none;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.article-movie-select-box{
+	height:360px ; 
+	width:716px; 
+	z-index: 1100; 
+	background: #0B0C29;
+	position: absolute; 
+	border: 1px solid; 
+	top: 116px; 
+	left: 41px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.m_select_btn{
+	color: #878681;
+	float: right;
+	margin: 12px;
+	font-size:18px
+}

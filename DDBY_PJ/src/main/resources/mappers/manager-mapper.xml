@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="managerMapper">
+	
+	<resultMap type="Event" id="eventResultSet">
+		<id property="event_num" column="EVENT_NO"/>
+		<result property="event_title" column="EVENT_TITLE"/>
+		<result property="event_content" column="EVENT_CONTENT"/>
+		<result property="event_date" column="EVENT_DATE"/>
+		<result property="event_b_img" column="EVENT_B_IMG"/>
+		<result property="event_s_img" column="EVENT_S_IMG"/>
+		<result property="event_re_b_img" column="EVENT_RE_B_IMG"/>
+		<result property="event_re_s_img" column="EVENT_RE_S_IMG"/>
+	</resultMap>
+	
+	<resultMap type="Movie" id="movieResultSet">
+		<id property="movie_title" column="MOVIE_TITLE"/>
+		<result property="movie_title_eng" column="MOVIE_TITLE_ENG"/>
+		<result property="movie_director" column="MOVIE_DIRECTOR"/>
+		<result property="movie_poster" column="MOVIE_POSTER"/>
+		<result property="movie_actor" column="MOVIE_ACTOR"/>
+		<result property="movie_release_date" column="MOVIE_RELEASE_DATE"/>
+		<result property="movie_tem" column="MOVIE_TEM"/>
+		<result property="movie_running_time" column="MOVIE_RUNNING_TIME"/>
+		<result property="movie_age" column="MOVIE_AGE"/>
+		<result property="movie_country" column="MOVIE_COUNTRY"/>
+		<result property="movie_story" column="MOVIE_STORY"/>
+		<result property="movie_big_img" column="MOVIE_BIG_IMG"/>
+		<result property="movie_headline" column="MOVIE_HEADLINE"/>
+		<result property="movie_youtube" column="MOVIE_YOUTUBE"/>
+		<result property="movie_guestcount" column="MOVIE_GUESTCOUNT"/>
+	</resultMap>
+	
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="notice_no" column="NOTICE_NO"/>
+		<result property="notice_title" column="NOTICE_TITLE"/>
+		<result property="notice_content" column="NOTICE_CONTENT"/>
+		<result property="notice_date" column="NOTICE_DATE"/>
+		<result property="notice_count" column="NOTICE_COUNT"/>
+	</resultMap>
+	
+	<insert id="inputEvent" parameterType="Event">
+		INSERT INTO EVENT 
+		VALUES(SEQ_EVENT_NO.NEXTVAL
+			 , #{event_title}
+			 , #{event_content}
+			 , DEFAULT
+			 , #{event_b_img}
+			 , #{event_s_img}
+			 , #{event_re_s_img}
+			 , #{event_re_b_img}
+		)
+	</insert>
+	
+	<select id="eventList" resultMap="eventResultSet">
+		SELECT EVENT_NO
+			 , EVENT_TITLE
+			 , EVENT_RE_S_IMG
+		  FROM EVENT
+		 ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="eventDetail" parameterType="_int" resultType="Event">
+		SELECT *
+		  FROM EVENT
+		 WHERE EVENT_NO = #{no}
+	</select>
+	
+	<update id="updateEvent" parameterType="Event">
+		UPDATE EVENT 
+		   SET EVENT_TITLE=#{event_title}
+		     , EVENT_CONTENT=#{event_content}
+		     , EVENT_B_IMG=#{event_b_img}
+		     , EVENT_S_IMG=#{event_s_img}
+		     , EVENT_RE_S_IMG=#{event_re_s_img}
+		     , EVENT_RE_B_IMG=#{event_re_b_img} 
+		 WHERE EVENT_NO=#{event_num}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="_int">
+		DELETE EVENT 
+		 WHERE EVENT_NO=#{event_num}
+	</delete>
+	
+	<select id="getEventCount" resultType="_int">
+		SELECT COUNT(*) FROM EVENT
+	</select>
+	
+	<insert id="couponIssue" parameterType="hashmap">
+		INSERT INTO COUPON_LIST 
+		VALUES(#{email}
+		     , (SELECT NVL(MAX(COUPON_NUM),0)+1 
+        		FROM COUPON_LIST WHERE USER_EMAIL=#{email})
+		     , DEFAULT
+		     , #{cTitle}
+		     , #{used}
+		     )
+	</insert>
+	
+	<update id="couponCount" parameterType="string">
+		UPDATE DDBY_USER
+		   SET USER_COUPON_COUNT = USER_COUPON_COUNT+1
+		 WHERE USER_EMAIL = #{email}
+	</update>
+	
+	<select id="couponCheck" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM COUPON_LIST 
+		 WHERE USER_EMAIL = #{email} 
+		   AND COUPON_TITLE= #{cTitle}
+	</select>
+	
+	<select id="getEvent" resultMap="eventResultSet">
+		SELECT * 
+		  FROM EVENT 
+		 ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="getMovie" resultMap="movieResultSet">
+		SELECT * 
+		  FROM MOVIE 
+		 ORDER BY movie_release_date DESC
+	</select>
+	
+	<select id="getMovies" resultMap="movieResultSet">
+		SELECT * 
+		  FROM MOVIE 
+		 ORDER BY movie_release_date DESC
+	</select>
+	
+	<select id="movieDetail" parameterType="string" resultType="Movie">
+		SELECT * 
+		  FROM MOVIE 
+		 WHERE MOVIE_TITLE = #{title}
+	</select>
+	
+
+	<select id="getStillimg" parameterType="string" resultType="string">
+		SELECT SC_STEEL_IMG 
+		  FROM STEEL_CUT 
+		 WHERE SC_TITLE = #{title}
+	</select> 
+	
+	<select id="getMovieCount" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM MOVIE
+	</select>
+	
+	<select id="getTrailerCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM TRAILER
+	</select>
+	
+	<select id="getTrailers" resultMap="movieResultSet">
+		SELECT * 
+		  FROM TRAILER 
+	</select>
+	
+	<select id="getMovieInfo" parameterType="_int" resultMap="movieResultSet">
+		SELECT * 
+  		  FROM MOVIE A
+ 		 WHERE A.MOVIE_TITLE 
+ 		    IN (SELECT B.MS_TITLE 
+ 		    	  FROM MOVIE_SCHEDULE B 
+ 		    	 WHERE B.MS_NO=#{ms_no})
+	</select>
+	
+	<select id="getWishCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		  FROM WISH_LIST
+		  WHERE USER_EMAIL = #{email}
+		  AND MOVIE_TITLE = #{mTitle}
+	</select>
+	
+	<select id="findMovieCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MOVIE
+		 WHERE MOVIE_TITLE LIKE '%'|| #{searchText} || '%'
+		    OR MOVIE_TITLE_ENG LIKE '%'|| #{searchText} || '%'
+		    OR MOVIE_DIRECTOR LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_ACTOR LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_COUNTRY LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_TEM LIKE '%'|| #{searchText} || '%'
+	</select>
+	
+	<select id="findMovie" parameterType="string" resultMap="movieResultSet">
+		SELECT *
+		  FROM MOVIE
+		 WHERE MOVIE_TITLE LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_TITLE_ENG LIKE '%'|| #{searchText} || '%'
+		    OR MOVIE_DIRECTOR LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_ACTOR LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_COUNTRY LIKE '%' || #{searchText} || '%'
+		    OR MOVIE_TEM LIKE '%'|| #{searchText} || '%'
+		 ORDER BY MOVIE_RELEASE_DATE DESC
+	</select>
+	
+	<select id="writeNotice" parameterType="hashmap" resultMap="noticeResultSet">
+		INSERT INTO NOTICE
+		VALUES(SEQ_NOTICE_NO.NEXTVAL
+		     , #{nTitle}
+		     , #{nContent}
+		     , SYSDATE
+		     , 0
+		)
+	</select>
+	
+	<select id="getNoticeList" resultMap="noticeResultSet">
+		SELECT * FROM NOTICE
+		ORDER BY NOTICE_NO DESC
+	</select>
+	
+	<select id="findNoticeCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+	</select>
+	
+	<select id="getNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT * 
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{notice_no}
+	</select>
+	
+	<update id="nViewCountUp" parameterType="_int">
+		UPDATE NOTICE
+		  SET NOTICE_COUNT = NOTICE_COUNT+1
+		WHERE NOTICE_NO = #{notice_no}
+	</update>
+	
+	<update id="noticeUpdate" parameterType="hashmap">
+		UPDATE NOTICE
+		  SET NOTICE_CONTENT = #{content},
+		  NOTICE_TITLE = #{title}
+		WHERE NOTICE_NO = #{notice_no}
+	</update>
+	
+	<delete id="noticeDelete" parameterType="_int">
+		DELETE NOTICE 
+		 WHERE NOTICE_NO = #{no}
+	</delete>
+	
+	<select id="getMovieRank" resultMap="movieResultSet">
+		SELECT * 
+		  FROM MOVIE
+		 ORDER BY MOVIE_GUESTCOUNT DESC
+	</select>
+	
+</mapper>

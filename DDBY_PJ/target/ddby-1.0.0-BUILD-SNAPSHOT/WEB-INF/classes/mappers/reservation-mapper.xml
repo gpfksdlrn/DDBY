@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationMapper">
+	
+	<resultMap type="Scheduler" id="schedulerResultSet">
+		<id property="ms_no" column="MS_NO"/>
+		<result property="ms_title" column="MS_TITLE"/>
+		<result property="ms_showtime" column="MS_SHOWTIME"/>
+		<result property="ms_theater" column="MS_THEATER"/>
+	</resultMap>
+	
+	<resultMap type="Coupon" id="couponResultSet">
+		<id property="user_email" column="USER_EMAIL"/>
+		<result property="coupon_num" column="COUPON_NUM"/>
+		<result property="coupon_date" column="COUPON_DATE"/>
+		<result property="coupon_title" column="COUPON_TITLE"/>
+		<result property="coupon_used" column="COUPON_USED"/>
+	</resultMap>
+
+	<select id="getScheduler" parameterType="String" resultMap="schedulerResultSet">
+		<![CDATA[
+		SELECT DISTINCT MS_TITLE
+		  FROM MOVIE_SCHEDULE
+		 WHERE MS_SHOWTIME >= TO_DATE(#{Tday},'YYYY-MM-DD') AND MS_SHOWTIME < TO_DATE(#{Tday},'YYYY-MM-DD')+1
+		]]>
+	</select>
+	
+	<select id="getTitleScheduler" parameterType="hashmap" resultMap="schedulerResultSet">
+		SELECT MS_TITLE, TO_CHAR(MS_SHOWTIME, 'HH24:MI') AS MS_SHOWTIME, MS_THEATER, MS_NO
+  		  FROM MOVIE_SCHEDULE 
+ 		 WHERE MS_SHOWTIME 
+ 	   BETWEEN TO_DATE(#{mTday},'YYYY-MM-DD') 
+  		   AND TO_DATE(#{mTday},'YYYY-MM-DD')+0.99999
+  		   AND MS_TITLE=#{mTitle}
+  		 ORDER BY MS_SHOWTIME
+	</select>
+	
+	<select id="getMovieage" parameterType="String" resultType="_int">
+		SELECT MOVIE_AGE FROM MOVIE
+		WHERE MOVIE_TITLE = #{ms_title}
+	</select>
+	
+	<select id="getNumScheduler" parameterType="_int" resultMap="schedulerResultSet">
+		SELECT * FROM MOVIE_SCHEDULE WHERE MS_NO = #{ms_no}
+	</select>
+	
+	<select id="getSeat" parameterType="_int" resultType="String">
+		SELECT SEAT_NUM FROM SEAT WHERE MS_NO = #{ms_no} AND SEAT_YN = 'Y'
+	</select>
+	
+	<select id="chkSeat" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM SEAT WHERE MS_NO=#{ms_no} AND SEAT_NUM=#{seatNum} AND SEAT_YN='Y'
+	</select>
+	
+	<select id="getCoupon" parameterType="User" resultMap="couponResultSet">
+		SELECT * 
+		  FROM COUPON_LIST
+		 WHERE USER_EMAIL=#{user_email}
+		   AND COUPON_USED='N'
+	</select>
+	
+	<update id="usedCoupon" parameterType="hashmap">
+		UPDATE COUPON_LIST 
+		   SET COUPON_USED='Y' 
+		 WHERE COUPON_TITLE=#{coupon} 
+		   AND USER_EMAIL=#{email}
+	</update>
+	
+	<update id="usedPoint" parameterType="hashmap">
+		UPDATE DDBY_USER
+		   SET USER_POINT=USER_POINT-#{point}
+		 WHERE USER_EMAIL=#{email} 
+	</update>
+	
+	<update id="usedCouponCount" parameterType="hashmap">
+		UPDATE DDBY_USER 
+		   SET USER_COUPON_COUNT=USER_COUPON_COUNT-1 
+		 WHERE USER_EMAIL=#{email}
+	</update>
+	
+	<update id="usedSeat" parameterType="hashmap">
+		UPDATE SEAT 
+		   SET SEAT_YN='Y'
+		 WHERE MS_NO=#{ms_no}
+		   AND SEAT_NUM=#{seat}
+	</update>
+	
+	<update id="buyListInsert" parameterType="hashmap">
+		INSERT INTO BUY_LIST
+		VALUES((SELECT NVL(MAX(BUY_NO),0)+1 
+        		FROM BUY_LIST WHERE USER_EMAIL=#{email})
+			 , #{email}
+			 , SYSDATE
+			 , SEQ_BUY_NO.NEXTVAL
+			 , #{getMs_title}
+			 , #{total_pay}
+		<choose>
+		<when test="total_pay eq '0'.toString()">
+			 ,'포인트 결제'
+		</when>
+		<otherwise>
+			 ,'카카오페이 온라인'
+		</otherwise>
+		</choose>
+			 , DEFAULT
+			 , #{select_Seat}
+			 , #{getMs_theater}
+			 , TO_DATE(#{getMs_showtime},'YYYY-MM-DD HH24:MI:SS')
+			 , #{total_c}
+			 , #{ms_no}
+			 , DEFAULT
+			 , DEFAULT)
+	</update>
+	
+	<select id="getResernum" parameterType="hashmap" resultType="_int">
+		SELECT RESERVATION_NO 
+		  FROM BUY_LIST
+		 WHERE USER_EMAIL=#{email}
+		   AND MS_NO = #{ms_no}
+		   AND SEAT_NO = #{select_Seat}
+	</select>
+	
+	<update id="addPoint" parameterType="hashmap">
+		UPDATE DDBY_USER 
+		   SET USER_POINT=USER_POINT+#{point}
+		 WHERE USER_EMAIL=#{email}
+	</update>
+	
+	<select id="getPoint" parameterType="String" resultType="_int">
+		SELECT USER_POINT 
+		   FROM DDBY_USER
+		 WHERE USER_EMAIL=#{user_email}
+	</select>
+	
+	<insert id="pointListIn" parameterType="hashmap">
+		INSERT INTO POINT_LIST
+		VALUES(#{email}
+			 , (SELECT NVL(MAX(POINT_NO),0)+1 
+                  FROM POINT_LIST 
+                 WHERE USER_EMAIL=#{email})
+       		 , #{point}
+       		 , SYSDATE
+       		 , #{use})
+	</insert>
+	
+</mapper>

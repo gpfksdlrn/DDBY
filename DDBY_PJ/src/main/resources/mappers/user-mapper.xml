@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userMapper">
+	
+	<resultMap type="User" id="userResultSet">
+		<id property="user_email" column="USER_EMAIL"/>
+		<result property="user_name" column="USER_NAME"/>
+		<result property="user_password" column="USER_PASSWORD"/>
+		<result property="user_nickname" column="USER_NICKNAME"/>
+		<result property="user_img" column="USER_IMG"/>
+		<result property="user_re_img" column="USER_RE_IMG"/>
+		<result property="user_marketing" column="USER_MARKETING"/>
+		<result property="user_status" column="USER_STATUS"/>
+		<result property="user_point" column="USER_POINT"/>
+		<result property="user_coupon" column="USER_COUPON_COUNT"/>
+		<result property="user_enrolldate" column="USER_ENROLLDATE"/>
+	</resultMap>
+	
+	<resultMap type="Coupon" id="couponResultSet">
+		<id property="user_email" column="USER_EMAIL"/>
+		<result property="coupon_num" column="COUPON_NUM"/>
+		<result property="coupon_date" column="COUPON_DATE"/>
+		<result property="coupon_title" column="COUPON_TITLE"/>
+		<result property="coupon_used" column="COUPON_USED"/>
+	</resultMap>
+	
+	<resultMap type="BuyList" id="buyListResultSet">
+		<id property="buy_no" column="BUY_NO"/>
+		<result property="user_email" column="USER_EMAIL"/>
+		<result property="buy_date" column="BUY_DATE"/>
+		<result property="reservation_no" column="RESERVATION_NO"/>
+		<result property="movie_title" column="MOVIE_TITLE"/>
+		<result property="pay_money" column="PAY_MONEY"/>
+		<result property="pay_way" column="PAY_WAY"/>
+		<result property="refund" column="REFUND"/>
+		<result property="seat_no" column="SEAT_NO"/>
+		<result property="theater" column="THEATER"/>
+		<result property="showtime" column="SHOWTIME"/>
+		<result property="buy_person" column="BUY_PERSON"/>
+		<result property="ms_no" column="MS_NO"/>
+		<result property="watching" column="WATCHING"/>
+		<result property="diary_write" column="DIARY_WRITE"/>
+	</resultMap>
+	
+	<resultMap type="PointList" id="pointListResultSet">
+		<id property="point_no" column="POINT_NO"/>
+		<result property="user_email" column="USER_EMAIL"/>
+		<result property="pl_point" column="PL_POINT"/>
+		<result property="iss_date" column="ISS_DATE"/>
+		<result property="point_used" column="POINT_USED"/>
+	</resultMap>
+	
+	<resultMap type="Movie" id="movieResultSet">
+		<id property="movie_title" column="MOVIE_TITLE"/>
+		<result property="movie_title_eng" column="MOVIE_TITLE_ENG"/>
+		<result property="movie_director" column="MOVIE_DIRECTOR"/>
+		<result property="movie_poster" column="MOVIE_POSTER"/>
+		<result property="movie_actor" column="MOVIE_ACTOR"/>
+		<result property="movie_release_date" column="MOVIE_RELEASE_DATE"/>
+		<result property="movie_tem" column="MOVIE_TEM"/>
+		<result property="movie_running_time" column="MOVIE_RUNNING_TIME"/>
+		<result property="movie_age" column="MOVIE_AGE"/>
+		<result property="movie_country" column="MOVIE_COUNTRY"/>
+		<result property="movie_story" column="MOVIE_STORY"/>
+		<result property="movie_big_img" column="MOVIE_BIG_IMG"/>
+		<result property="movie_headline" column="MOVIE_HEADLINE"/>
+		<result property="movie_youtube" column="MOVIE_YOUTUBE"/> 
+		<result property="movie_guestcount" column="MOVIE_GUESTCOUNT"/>
+	</resultMap> 
+	
+	<resultMap type="DIARY" id="diaryResultSet">
+		<id property="dia_no" column="BUY_NO"/>
+		<result property="dia_email" column="USER_EMAIL"/>
+		<result property="dia_date" column="WRITE_DATE"/>
+		<result property="dia_couple" column="COUPLE_NAME"/>
+		<result property="dia_content" column="MD_CONTENT"/>
+	</resultMap>
+
+	<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM DDBY_USER
+		 WHERE USER_EMAIL=#{id}
+	</select>
+	
+	<select id="nickCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM DDBY_USER
+		WHERE USER_NICKNAME=#{nick}
+	</select>
+	
+	<insert id="signUp" parameterType="User">
+		INSERT INTO DDBY_USER VALUES(#{user_name},#{user_email},#{user_password},#{user_nickname},'dd.png','gg.png',#{user_marketing},DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+	</insert>
+	
+	<select id="loginUser" parameterType="User" resultMap="userResultSet">
+		SELECT *
+		  FROM DDBY_USER
+		 WHERE USER_EMAIL=#{user_email} AND USER_STATUS='N'
+	</select>
+	
+	<update id="updateProfile" parameterType="User">
+		UPDATE DDBY_USER 
+		   SET USER_NICKNAME = #{user_nickname}
+		     , USER_MARKETING = #{user_marketing}
+		     , USER_IMG = #{user_img}
+		     , USER_RE_IMG = #{user_re_img}
+		 WHERE USER_EMAIL = #{user_email}
+	</update>
+	
+	<update id="deleteUser" parameterType="User">
+		UPDATE DDBY_USER 
+		   SET USER_STATUS = 'Y'
+		 WHERE USER_EMAIL = #{user_email}
+	</update>
+	
+	<update id="modifyPwd" parameterType="User">
+		UPDATE DDBY_USER 
+		   SET USER_PASSWORD = #{user_password}
+		 WHERE USER_EMAIL = #{user_email}
+	</update>
+	
+	<select id="cListCount" parameterType="User" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM COUPON_LIST 
+		 WHERE USER_EMAIL = #{user_email}
+		   AND COUPON_USED='N'
+	</select>
+	
+	<select id="couponList" parameterType="User" resultMap="couponResultSet">
+		SELECT *
+		  FROM COUPON_LIST 
+		 WHERE USER_EMAIL = #{user_email}
+	</select>
+	
+	<select id="bListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM BUY_LIST
+		 WHERE USER_EMAIL = #{email}
+	</select>
+	
+	<select id="getBuyList" parameterType="string" resultMap="buyListResultSet">
+		SELECT BUY_NO
+		     , USER_EMAIL
+		     , BUY_DATE
+		     , RESERVATION_NO
+		     , MOVIE_TITLE
+		     , PAY_MONEY
+		     , PAY_WAY
+		     , REFUND
+		     , SEAT_NO
+		     , THEATER
+		     , TO_CHAR(SHOWTIME, 'YYYY-MM-DD HH24:MI:SS') AS SHOWTIME
+		     , BUY_PERSON
+		     , MS_NO
+		     , WATCHING
+		  FROM BUY_LIST 
+		 WHERE USER_EMAIL = #{email}
+		 ORDER BY BUY_NO DESC
+	</select>
+	
+	<select id="pListCount" parameterType="User" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM POINT_LIST
+		 WHERE USER_EMAIL =  #{user_email}
+	</select>
+	
+	<select id="pointList" parameterType="string" resultMap="pointListResultSet">
+		SELECT *
+		  FROM POINT_LIST
+		 WHERE USER_EMAIL = #{user_email}
+		 ORDER BY POINT_NO DESC
+	</select>
+
+	<insert id="wishListIn" parameterType="hashmap">
+		INSERT INTO WISH_LIST
+		VALUES(#{email}
+			 , #{mTitle})
+	</insert>
+	
+	<insert id="wishListDel" parameterType="hashmap">
+		DELETE FROM WISH_LIST
+		 WHERE USER_EMAIL = #{email}
+		 AND MOVIE_TITLE = #{mTitle}
+	</insert>
+	
+	<select id="getWishMovie" parameterType="string" resultMap="movieResultSet">
+		SELECT *
+		  FROM MOVIE
+		 WHERE MOVIE_TITLE
+		    IN (SELECT MOVIE_TITLE
+		    	  FROM WISH_LIST
+		    	 WHERE USER_EMAIL=#{email})
+	</select>
+	
+	<select id="getMovieList" parameterType="string" resultMap="movieResultSet">
+		SELECT * 
+		  FROM MOVIE
+		 WHERE MOVIE_TITLE = #{movie_title}
+	</select>
+
+	<select id="bListCount_N" parameterType="string" resultType="_int">
+		SELECT COUNT (*) 
+		  FROM BUY_LIST
+		 WHERE USER_EMAIL = #{email}
+		 AND WATCHING='N'
+	</select>
+
+	<select id="getBuyList_N" parameterType="string" resultMap="buyListResultSet">
+		SELECT BUY_NO
+		     , USER_EMAIL
+		     , BUY_DATE
+		     , RESERVATION_NO
+		     , MOVIE_TITLE
+		     , PAY_MONEY
+		     , PAY_WAY
+		     , REFUND
+		     , SEAT_NO
+		     , THEATER
+		     , TO_CHAR(SHOWTIME, 'YYYY-MM-DD HH24:MI:SS') AS SHOWTIME
+		     , BUY_PERSON
+		     , MS_NO
+		     , WATCHING
+		  FROM BUY_LIST 
+		 WHERE USER_EMAIL = #{user_email}
+		 AND WATCHING='N'
+		 ORDER BY BUY_NO DESC
+	</select>
+	
+	<update id="deleteWatching" parameterType="hashmap">
+		UPDATE BUY_LIST
+		   SET WATCHING = 'Y'
+		 WHERE USER_EMAIL=#{email}
+		   AND BUY_NO = #{b_no}
+	</update>
+	
+	<select id="getBuyLists" parameterType="string" resultMap="buyListResultSet">
+		SELECT BUY_NO
+		     , USER_EMAIL
+		     , BUY_DATE
+		     , RESERVATION_NO
+		     , MOVIE_TITLE
+		     , PAY_MONEY
+		     , PAY_WAY
+		     , REFUND
+		     , SEAT_NO
+		     , THEATER
+		     , TO_CHAR(SHOWTIME, 'YYYY-MM-DD HH24:MI:SS') AS SHOWTIME
+		     , BUY_PERSON
+		     , MS_NO
+		     , WATCHING
+		  FROM BUY_LIST 
+		 WHERE USER_EMAIL = #{user_email}
+		 AND DIARY_WRITE='N'
+		 ORDER BY BUY_NO DESC
+	</select>
+	
+	<insert id="diaryInsert" parameterType="hashmap">
+		INSERT INTO MY_DIARY 
+		VALUES ( #{buy_no}
+			   , #{email}
+			   , DEFAULT
+			   , #{txtMovieWith}
+			   , #{textContent})
+	</insert>
+	
+	<select id="getDiaryCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MY_DIARY
+		 WHERE USER_EMAIL = #{email}
+	</select>
+	
+	<!-- 다이어리 정보 가져오기 -->
+	<select id="getDiary" parameterType="string" resultMap="diaryResultSet">
+		SELECT *
+		  FROM MY_DIARY
+		 WHERE USER_EMAIL = #{email}
+		 ORDER BY WRITE_DATE DESC
+	</select>
+	
+	<!-- 다이어리 게시글이 있는 영화 정보 가져오기 -->
+	<select id="getBuylistMovie" parameterType="hashmap" resultMap="movieResultSet">
+		SELECT * FROM MOVIE
+		 WHERE MOVIE_TITLE 
+		    IN (SELECT MOVIE_TITLE 
+         		  FROM BUY_LIST 
+                 WHERE USER_EMAIL = #{email}
+                   AND BUY_NO 
+                    IN (SELECT MY_DIARY.BUY_NO 
+                          FROM MY_DIARY 
+                         WHERE USER_EMAIL = #{email}
+                           AND BUY_NO=#{dia_num}))
+	</select>
+	
+	<!-- 다이어리 게시글이 있는 BUY_LIST -->
+	<select id="getBuyDiary" parameterType="hashmap" resultMap="buyListResultSet">
+		SELECT * FROM BUY_LIST
+		 WHERE USER_EMAIL=#{email}
+		   AND BUY_NO=#{dia_num}
+	</select>
+	
+	<update id="diaryBuylistUpdate" parameterType="hashmap">
+		UPDATE BUY_LIST
+		   SET DIARY_WRITE = #{write}
+		 WHERE USER_EMAIL=#{email}
+		   AND BUY_NO = #{buy_no}
+	</update>
+	
+	<delete id="diaryDel" parameterType="hashmap">
+		DELETE MY_DIARY
+		 WHERE USER_EMAIL=#{email}
+		   AND BUY_NO = #{buy_no}
+	</delete>
+	
+	<update id="diaryUpdate" parameterType="hashmap">
+		UPDATE MY_DIARY
+		   SET MD_CONTENT = #{textContent}, 
+		       COUPLE_NAME = #{txtMovieWith}
+		 WHERE USER_EMAIL=#{email}
+		   AND BUY_NO = #{buy_no}
+	</update>
+</mapper>
