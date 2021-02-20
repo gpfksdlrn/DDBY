@@ -293,12 +293,13 @@
                	success: function(data){
                		var tday = new Date();
                		var mtd = JSON.parse(data);	// JSON.parse는 Json타입을 자바스크립트 코드화 시킴.
-               		to_days = new Date();
-        			
+               		
                		for(var i=0; i<mtd.length; i++){
 						var dd = tday.getFullYear() + "-" + (tday.getMonth() + 1) + "-" + tday.getDate();
                			var ymd = $('.group_top').children('.tit_day').text().substring(0,9);
                			
+               			// 맨처음에만 오늘 날짜의 ymd는 가져오지 못해 ""으로 인식된다.
+               			// 수동으로 지정을 해준다.
                			if(ymd==""){
                				dd = dd+" "+mtd[i].ms_showtime;
                				var date = new Date(dd);
@@ -307,24 +308,27 @@
                				var date = new Date(ymd);
                			}
                			
-                   					
+               			// 현재 날짜와 시간
+                   		to_days = new Date();
+                   		
                     	if(mtd[i].ms_seat == 0){
                     		html += "<li class='scBtn'><a role='button' href='#' onclick='subBtn(this);'><dl><dt>상영시간</dt> <dd class='time'><strong>"+mtd[i].ms_showtime+"</strong><input type='hidden' value='"+mtd[i].ms_no+"' class='ms_no'/></dd><dt>잔여석</dt><dd class='seat'><strong>"+mtd[i].ms_seat+"</strong> / 100 <span class='soldout'>[매진]<span></dd><dt>상영관</dt><dd class='hall'>"+mtd[i].ms_theater+"관</dd></dl></a></li>"; 
                     		
                    			$('.'+num).append(html);
-                   			$('.scBtn').addClass('scBtn_disable');
+                   			$('.scBtn').addClass('scBtn_disable'); 
                        		$('.soldout').css("color","red");
                     	}else{
-            		 		html += "<li class='scBtn'><a role='button' href='#' onclick='subBtn(this);'><dl><dt>상영시간</dt> <dd class='time'><strong>"+mtd[i].ms_showtime+"</strong><input type='hidden' value='"+mtd[i].ms_no+"' class='ms_no'/></dd><dt>잔여석</dt><dd class='seat'><strong>"+mtd[i].ms_seat+"</strong> / 100</dd><dt>상영관</dt><dd class='hall'>"+mtd[i].ms_theater+"관</dd></dl></a></li>"; 
+            		 		html += "<li class='scBtn"+" "+"m"+mtd[i].ms_no+"'><a role='button' href='#' onclick='subBtn(this);'><dl><dt>상영시간</dt> <dd class='time'><strong>"+mtd[i].ms_showtime+"</strong><input type='hidden' value='"+mtd[i].ms_no+"' class='ms_no'/></dd><dt>잔여석</dt><dd class='seat'><strong>"+mtd[i].ms_seat+"</strong> / 100</dd><dt>상영관</dt><dd class='hall'>"+mtd[i].ms_theater+"관</dd></dl></a></li>"; 
             		 		$('.'+num).append(html); 
                     	}
                     	
+                    	// 앞의 ymd와 to_days를 비교
 	            		if(date<to_days){
-	            			$('.scBtn').addClass('scBtn_disable');
-	            		} 
+	            			$('.m'+mtd[i].ms_no).addClass('scBtn_disable');
+	            		}
                    		html="";
                		}
-               	}
+                  }
                });
 		}
 		
