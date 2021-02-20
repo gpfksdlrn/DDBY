@@ -305,7 +305,7 @@
                				var date = new Date(dd);
                			}else{
                				ymd = ymd+" "+mtd[i].ms_showtime;
-               				var date = new Date(ymd);
+               				var date = new Date(ymd); 
                			}
                			
                			// 현재 날짜와 시간
